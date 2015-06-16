@@ -7,29 +7,38 @@ namespace Pathing
 {
     public class GameManager : MonoBehaviour
     {
-        private IAStarNode start, goal;
+        private Node start;
+        private Node goal;
 
-
-        void Update()
+        protected void Update()
         {
             if (Input.GetMouseButtonDown(0))
-            {
-
-                Ray ray;
+            {                
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
-                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray,out hit))
+
+                if (Physics.Raycast(ray, out hit))
                 {
-                    if (hit.transform.tag == "Node" && start == null)
+                    Node nodeComponent = hit.collider.GetComponent<Node>();
+
+                    if (nodeComponent == null)
                     {
-                        start = (IAStarNode) GetComponent(typeof(IAStarNode));
+                        return;
+                    }
+
+                    if (start == null)
+                    {
+                        start = hit.collider.GetComponent<Node>();
                         Debug.Log("Start == " + start);
                     }
-                    if (hit.transform.tag == "Node" && goal == null && start != null)
+                    else if (goal == null && start != null)
                     {
-                        goal = (IAStarNode)GetComponent(typeof(IAStarNode));
+                        goal = hit.collider.GetComponent<Node>();
+                        AStar.GetPath(start, goal);
+                        Debug.DrawLine(start.transform.position, goal.transform.position);
                         Debug.Log("Goal == " + goal);
                     }
+
                 }
             }
 
