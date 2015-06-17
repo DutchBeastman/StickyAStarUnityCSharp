@@ -7,16 +7,33 @@ namespace Pathing
 {
     public class Node : MonoBehaviour, IAStarNode
     {
-        [SerializeField] private Node [] neighbourNodes;
+        private Vector2 nodePos;
+        
+        public Node [] neighbourNodes;
         [SerializeField] private int cost;
 
+        public Vector2 NodePos
+        {
+            get
+            {
+                return nodePos;
+            }
+            set
+            {
+                nodePos = value;
+            }
+        }
+        public void CheckNeighbours(Node thisNode)
+        {
+            
+        }
         public IEnumerable<IAStarNode> Neighbours
         {
             get
             {
                 //Get all neighbours from tile
-                
-                throw new NotImplementedException();
+                return neighbourNodes;
+                //throw new NotImplementedException();
             }
         }
 
