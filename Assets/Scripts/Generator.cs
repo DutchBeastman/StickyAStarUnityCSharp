@@ -7,7 +7,7 @@ using Pathing;
 public class Generator : MonoBehaviour {
     //public enum Tiles { Grass, Mountain, Forest, Desert, Water};
 
-    [SerializeField]private List<Vector2> nodeCoordinates;
+
     [SerializeField]private List<Node> nodes;
     [SerializeField]private GameObject [] tiles; 
     [SerializeField]private int tilesX;
@@ -45,36 +45,56 @@ public class Generator : MonoBehaviour {
                 Node node = instantiateNode.GetComponent<Node>();
                 node.NodePos = new Vector2(x, z);
                 nodes.Add(node);
-                nodeCoordinates.Add(node.NodePos);
-                Debug.Log(node.NodePos);
+                DetermineNeighbours(node);
                 //neighbours toevoegen 
-                if (x == tilesX - 1 && z == tilesZ - 1)
+                /*if (x == tilesX - 1 && z == tilesZ - 1)
                 {
+
                     Debug.Log("kaaseNAppelszijngoed");
-                }
+                }*/
                 yield return new WaitForSeconds(0.1f);
 
 
             }
         }
-        
+        SetNeighbours();
     }
 
-    //Checking for the neighbours
-    private List<Node> CheckingNeighbours(Node current) 
+    private void SetNeighbours()
     {
-        
-        return nodes;
-    }
 
-    private void NodeLooping()
+        Debug.Log("shrek");
+    }
+    //checking for neighbours
+    private void DetermineNeighbours(Node current)
     {
+        List<Vector2> vector2List = new List<Vector2>();
+        vector2List.Add(new Vector2(0, -1));
+        vector2List.Add(new Vector2(+1, -1));
+        vector2List.Add(new Vector2(+1, 0));
+        vector2List.Add(new Vector2(0, +1));
+        vector2List.Add(new Vector2(-1, +1));
+        vector2List.Add(new Vector2(-1, 0));
+
         for (int i = 0; i < nodes.Count; i++)
         {
-            
+            for (int j = 0; j < vector2List.Count; j++)
+            {
+                Vector2 adjustedCurrent = current.NodePos;
+                adjustedCurrent += vector2List[j];
+                if(nodes[i].NodePos == adjustedCurrent)
+                {
+                    //This is a neighbour
+                    current.AddNeighbour(nodes[i]);
+                    nodes[i].AddNeighbour(current);
 
+                }
+                //Debug.Log(adjustedCurrent);
+            }
         }
-   
     }
+
+
+
 	
 }
