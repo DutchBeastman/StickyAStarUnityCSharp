@@ -47,13 +47,20 @@ namespace Pathing
 
         public float EstimatedCostTo(IAStarNode goal)
         {
+            List<int> costs = new List<int>();
             List<IAStarNode> ordered = new List<IAStarNode>(neighbourNodes);
-            ordered.Sort((n1, n2) => (n1.CostTo(n2).CompareTo(n2.CostTo(n1))));
+            ordered.Sort((n1, n2) => (n2.CostTo(n1).CompareTo(n1.CostTo(n2))));
             for (int i = 0; i < ordered.Count; i++)
             {
-                Debug.Log(ordered[i]);
+                if (CostTo(ordered[i]) > 0)
+                {
+                    Debug.DrawLine((ordered[i] as Node).transform.position, (goal as Node).transform.position);
+                    Debug.Log((ordered[i] as Node).cost);
+
+                    costs[i] = (ordered[i] as Node).cost;
+                }
+
             }
-           
             /*List<IAStarNode> neighboursWalkable = new List<IAStarNode>();
             //loop through every neighbour of the tiles and find any path, here you use CostTo in a loop.
             for (int i = 0; i < neighbourNodes.Count; i++)

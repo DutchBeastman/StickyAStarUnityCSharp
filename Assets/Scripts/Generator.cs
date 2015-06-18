@@ -16,9 +16,9 @@ public class Generator : MonoBehaviour {
 	protected void Start () {
         //Tiles tiles = (Tiles)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Tiles)).Length);
         //Generation();
-        StartCoroutine(Generation());
+        Generation();
 	}
-    private IEnumerator Generation()
+    private void Generation()
     {
         
         for (int x = 0; x < tilesX; x++)
@@ -52,7 +52,7 @@ public class Generator : MonoBehaviour {
 
                     Debug.Log("kaaseNAppelszijngoed");
                 }*/
-                yield return new WaitForSeconds(0.1f);
+               
 
 
             }
