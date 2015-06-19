@@ -46,12 +46,7 @@ public class Generator : MonoBehaviour {
                 node.NodePos = new Vector2(x, z);
                 nodes.Add(node);
                 DetermineNeighbours(node);
-                //neighbours toevoegen 
-                /*if (x == tilesX - 1 && z == tilesZ - 1)
-                {
 
-                    Debug.Log("kaaseNAppelszijngoed");
-                }*/
                
 
 
@@ -63,7 +58,7 @@ public class Generator : MonoBehaviour {
     private void SetNeighbours()
     {
 
-        Debug.Log("shrek");
+
     }
     //checking for neighbours
     private void DetermineNeighbours(Node current)
@@ -84,12 +79,11 @@ public class Generator : MonoBehaviour {
                 adjustedCurrent += vector2List[j];
                 if(nodes[i].NodePos == adjustedCurrent)
                 {
-                    //This is a neighbour
+                    //here the neigbours will add each other and give that through to the other node so that all nodes will have the correct amount of neighbours
                     current.AddNeighbour(nodes[i]);
                     nodes[i].AddNeighbour(current);
 
                 }
-                //Debug.Log(adjustedCurrent);
             }
         }
     }

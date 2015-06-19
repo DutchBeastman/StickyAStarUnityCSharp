@@ -28,20 +28,21 @@ namespace Pathing
                     else
                     {
                       Vector2 collidingPos =  hit.collider.GetComponent<Node>().NodePos;
-                        Debug.Log(collidingPos);
+     
                     }
 
                     if (start == null)
                     {
                         start = hit.collider.GetComponent<Node>();
-                        Debug.Log("Start == " + start);
+ 
                     }
                     else if (goal == null && start != null)
                     {
                         goal = hit.collider.GetComponent<Node>();
+                 
                         AStar.GetPath(start, goal);
-                        Debug.DrawLine(start.transform.position, goal.transform.position);
-                        Debug.Log("Goal == " + goal);
+                        Debug.DrawLine(start.transform.position, goal.transform.position,Color.yellow, int.MaxValue);
+              
                     }
 
                 }
