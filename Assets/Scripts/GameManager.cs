@@ -12,6 +12,7 @@ namespace Pathing
 
         protected void Update()
         {
+            //Making sure you can set a Waypoint through mouse click
             if (Input.GetMouseButtonDown(0))
             {                
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -28,18 +29,15 @@ namespace Pathing
                     else
                     {
                       Vector2 collidingPos =  hit.collider.GetComponent<Node>().NodePos;
-     
                     }
 
                     if (start == null)
                     {
                         start = hit.collider.GetComponent<Node>();
- 
                     }
                     else if (goal == null && start != null)
                     {
                         goal = hit.collider.GetComponent<Node>();
-                 
                         AStar.GetPath(start, goal);
                         Debug.DrawLine(start.transform.position, goal.transform.position,Color.yellow, int.MaxValue);
               
