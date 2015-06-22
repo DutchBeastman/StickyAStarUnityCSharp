@@ -38,7 +38,6 @@ namespace Pathing
             
             if(neighbourNodes.Contains(neighbour) && cost > 0)
             {
-                Debug.DrawLine(this.transform.position, ((Node)neighbour).transform.position, Color.blue, int.MaxValue);
                 return ((Node)neighbour).cost;
             }
 
@@ -53,7 +52,6 @@ namespace Pathing
             ordered.Sort((n1, n2) => (n2.CostTo(n1).CompareTo(n1.CostTo(n2))));
             for (int i = 0; i < ordered.Count; i++)
             {
-                Debug.DrawLine((ordered[i] as Node).transform.position, (goal as Node).transform.position, Color.red, int.MaxValue);
                 if (CostTo(ordered[i]) > 0)
                 {
                     for (int j = 0; j < CostTo(ordered[i]); j++)

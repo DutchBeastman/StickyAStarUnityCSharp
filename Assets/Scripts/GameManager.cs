@@ -28,7 +28,6 @@ namespace Pathing
                     else
                     {
                       Vector2 collidingPos =  hit.collider.GetComponent<Node>().NodePos;
-     
                     }
 
                     if (start == null)
@@ -39,9 +38,12 @@ namespace Pathing
                     else if (goal == null && start != null)
                     {
                         goal = hit.collider.GetComponent<Node>();
-                 
-                        AStar.GetPath(start, goal);
-                        Debug.DrawLine(start.transform.position, goal.transform.position,Color.yellow, int.MaxValue);
+                        IList<IAStarNode> pathNodes = AStar.GetPath(start, goal);
+                        for (int i = 0; i < pathNodes.Count; i++)
+                        {
+                            Debug.DrawLine(((Node)pathNodes[i]).gameObject.transform.position, ((Node)pathNodes[i + 1]).gameObject.transform.position, Color.yellow, int.MaxValue);
+                        }
+                        
               
                     }
 
