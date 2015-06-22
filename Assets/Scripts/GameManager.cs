@@ -13,7 +13,7 @@ namespace Pathing
         protected void Update()
         {
             if (Input.GetMouseButtonDown(0))
-            {                
+            {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
@@ -27,13 +27,13 @@ namespace Pathing
                     }
                     else
                     {
-                      Vector2 collidingPos =  hit.collider.GetComponent<Node>().NodePos;
+                        Vector2 collidingPos = hit.collider.GetComponent<Node>().NodePos;
                     }
 
                     if (start == null)
                     {
                         start = hit.collider.GetComponent<Node>();
- 
+
                     }
                     else if (goal == null && start != null)
                     {
@@ -43,8 +43,8 @@ namespace Pathing
                         {
                             Debug.DrawLine(((Node)pathNodes[i]).gameObject.transform.position, ((Node)pathNodes[i + 1]).gameObject.transform.position, Color.yellow, int.MaxValue);
                         }
-                        
-              
+
+
                     }
 
                 }

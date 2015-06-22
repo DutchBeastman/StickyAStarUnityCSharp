@@ -52,13 +52,6 @@ public class Generator : MonoBehaviour {
 
             }
         }
-        SetNeighbours();
-    }
-
-    private void SetNeighbours()
-    {
-
-
     }
     //checking for neighbours
     private void DetermineNeighbours(Node current)
