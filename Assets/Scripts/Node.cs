@@ -8,9 +8,9 @@ namespace Pathing
 {
     public class Node : MonoBehaviour, IAStarNode
     {
-        public Vector2 nodePos;
-        public List<IAStarNode> neighbourNodes = new List<IAStarNode>();
-        [SerializeField] public int cost;
+        private Vector2 nodePos;
+        private List<IAStarNode> neighbourNodes = new List<IAStarNode>();
+        [SerializeField] private int cost;
 
         public Vector2 NodePos
         {
@@ -35,8 +35,8 @@ namespace Pathing
         public float CostTo(IAStarNode neighbour)
         {
 
-            
-            if(neighbourNodes.Contains(neighbour) && cost > 0)
+
+            if (neighbourNodes.Contains(neighbour) && cost > 0)
             {
                 return ((Node)neighbour).cost;
             }
@@ -46,19 +46,20 @@ namespace Pathing
 
         public float EstimatedCostTo(IAStarNode goal)
         {
-   
+
             List<int> costs = new List<int>();
             List<IAStarNode> ordered = new List<IAStarNode>(neighbourNodes);
             ordered.Sort((n1, n2) => (n2.CostTo(n1).CompareTo(n1.CostTo(n2))));
             for (int i = 0; i < ordered.Count; i++)
             {
-                if (CostTo(ordered[i]) > 0)
+
+                for (int j = 0; j < CostTo(ordered[i]); j++)
                 {
-                    for (int j = 0; j < CostTo(ordered[i]); j++)
-                    { 
+                    if (CostTo(ordered[i]) > 0)
+                    {
                         return (CostTo(neighbourNodes[j]));
                     }
-                    
+
                 }
             }
             return cost;

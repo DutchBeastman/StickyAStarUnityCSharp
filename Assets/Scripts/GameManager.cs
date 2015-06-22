@@ -7,6 +7,7 @@ namespace Pathing
 {
     public class GameManager : MonoBehaviour
     {
+        private List<Renderer> render = new List<Renderer>();
         private Node start;
         private Node goal;
 
@@ -16,38 +17,49 @@ namespace Pathing
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
-
                 if (Physics.Raycast(ray, out hit))
                 {
+
                     Node nodeComponent = hit.collider.GetComponent<Node>();
-
-                    if (nodeComponent == null)
+                    if (nodeComponent != null)
                     {
-                        return;
-                    }
-                    else
-                    {
-                        Vector2 collidingPos = hit.collider.GetComponent<Node>().NodePos;
-                    }
-
-                    if (start == null)
-                    {
-                        start = hit.collider.GetComponent<Node>();
-
-                    }
-                    else if (goal == null && start != null)
-                    {
-                        goal = hit.collider.GetComponent<Node>();
-                        IList<IAStarNode> pathNodes = AStar.GetPath(start, goal);
-                        for (int i = 0; i < pathNodes.Count; i++)
+                        if (start != null && goal != null)
                         {
-                            Debug.DrawLine(((Node)pathNodes[i]).gameObject.transform.position, ((Node)pathNodes[i + 1]).gameObject.transform.position, Color.yellow, int.MaxValue);
+
+                            start = null;
+                            goal = null;
+                            for (int i = 0; i < render.Count; i++)
+                            {
+                                
+                                render[i].material.color = Color.white;
+                            }
+                            render.Clear();
+                        }
+                        if (start == null)
+                        {
+                            goal = null;
+                            start = hit.collider.GetComponent<Node>();
+                        }
+                        else if (goal == null && start != null)
+                        {
+                            goal = hit.collider.GetComponent<Node>();
+                            IList<IAStarNode> pathNodes = AStar.GetPath(start, goal);
+                            for (int i = 0; i < pathNodes.Count; i++)
+                            {
+                                if (pathNodes.Count != i)
+                                {
+                                    render.Add(((Node)pathNodes[i]).gameObject.transform.GetComponent<Renderer>());
+                                    Debug.Log(((Node)pathNodes[i]).gameObject.transform.GetComponent<Renderer>());
+                                    Debug.Log(render.Count);
+                                    render[i].material.color = Color.red;
+                                }
+
+                            }
                         }
 
-
                     }
-
                 }
+              
             }
 
         }
